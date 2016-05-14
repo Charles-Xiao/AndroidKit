@@ -3,4 +3,16 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+
+    <!-- Green Theme Palette -->
+    <color name="dark_primary">#388E3C</color>
+    <color name="primary">#4CAF50</color>
+    <color name="light_primary">#C8E6C9</color>
+    <color name="text_icons">#FFFFFF</color>
+    <color name="accent">#8BC34A</color>
+    <color name="text_primary">#212121</color>
+    <color name="text_secondary">#727272</color>
+    <color name="divider">#B6B6B6</color>
+    <color name="tab_nopress">#47C7F4</color>
+    <color name="tab_pressed">#00B3F1</color>
 </resources>

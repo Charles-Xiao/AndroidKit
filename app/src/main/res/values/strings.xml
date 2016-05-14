@@ -5,4 +5,11 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="action_settings">Settings</string>
+
+
+    <string name="zy_brightness">亮度</string>
+    <string name="zy_color">色彩</string>
+    <string name="zy_saturation">饱和度</string>
+
+
 </resources>

@@ -2,9 +2,11 @@ package com.charlesxiao.androidkit;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.view.View;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -12,14 +14,29 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+
+import com.charlesxiao.androidkit.fragment.SquareFragment;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    private FragmentManager mFragmentManager;
+    private Fragment mSquareFragment;
+    private Fragment mCurrentFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        mSquareFragment = new SquareFragment();
+        mFragmentManager = getSupportFragmentManager();
+        mFragmentManager.beginTransaction()
+                .replace(R.id.frame_main_content, mSquareFragment)
+                .commitAllowingStateLoss();
+        mCurrentFragment = mSquareFragment;
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -82,8 +99,9 @@ public class MainActivity extends AppCompatActivity
 
         if (id == R.id.nav_camera) {
             // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
 
+        } else if (id == R.id.nav_gallery) {
+            switchFragment(mCurrentFragment, mSquareFragment);
         } else if (id == R.id.nav_slideshow) {
 
         } else if (id == R.id.nav_manage) {
@@ -97,5 +115,26 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    /**
+     * 切换Fragment函数
+     *
+     * @param from
+     * @param to
+     */
+    private void switchFragment(Fragment from, Fragment to) {
+        if (mCurrentFragment != to) {
+            mCurrentFragment = to;
+            FragmentTransaction transaction = mFragmentManager
+                    .beginTransaction();
+
+            if (!to.isAdded()) { // 先判断是否被add过
+                transaction.hide(from).add(R.id.frame_main_content, to)
+                        .commit(); // 隐藏当前的fragment，add下一个到Activity中
+            } else {
+                transaction.hide(from).show(to).commit(); // 隐藏当前的fragment，显示下一个
+            }
+        }
     }
 }
